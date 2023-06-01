@@ -57,38 +57,61 @@ const getFeData = async () => {
       };
 
       // Items;
-      const itemXml = FeDataDescriptionResult.Invoice["cac:InvoiceLine"][0];
-      const ammount = Number(itemXml["cbc:InvoicedQuantity"][0]["_"]);
-      const bookName = itemXml["cac:Item"][0]["cbc:Description"][0];
-      const isbn =
-        itemXml["cac:Item"][0]["cac:StandardItemIdentification"][0][
-          "cbc:ID"
-        ][0]["_"];
-      const unitPrice = Number(
-        itemXml["cac:Price"][0]["cbc:PriceAmount"][0]["_"]
-      );
+      const itemXml = FeDataDescriptionResult.Invoice["cac:InvoiceLine"];
 
-      const item = {
-        ammount: ammount,
-        name: bookName,
-        isbn: isbn,
-        unitPrice: unitPrice,
-        totalPrice: unitPrice * ammount,
-      };
+      const itemsArr = itemXml.map((item) => {
+        const ammount = Number(item["cbc:InvoicedQuantity"][0]["_"]);
+        const bookName = item["cac:Item"][0]["cbc:Description"][0];
+        const code =
+          item["cac:Item"][0]["cac:StandardItemIdentification"][0]["cbc:ID"][0][
+            "_"
+          ];
+        const unitPrice = Number(
+          item["cac:Price"][0]["cbc:PriceAmount"][0]["_"]
+        );
 
-      //general object
-      const FE = {
-        id: FeId,
-        buyer: buyer,
-        item: item,
-      };
-      return FE;
+        const itemData = {
+          FeId: FeId,
+          buyer: buyer,
+          ammount: ammount,
+          name: bookName,
+          code: code,
+          unitPrice: unitPrice,
+          totalPrice: unitPrice * ammount,
+        };
+        return itemData;
+      });
+
+      return itemsArr;
     })
   );
-  console.log(
-    "🚀 ~ file: statistics.js:93 ~ getFeData ~ filesDataArray:",
-    filesDataArray
-  );
+  // console.log("🚀 ~ file: statistics.js:88 ~ getFeData ~ filesDataArray:", filesDataArray)
+  let filesData = filesDataArray.flat();
+  filesData = filesData.filter((element) => element !== undefined);
+  // console.log("🚀 ~ file: statistics.js:91 ~ getFeData ~ filesData:", filesData)
+
+  if (filesData.length < 1) {
+    return "No hay archivos xml para analizar";
+  }
+
+  const result = {};
+  const dataInfo = filesData.map((item) => {
+    const { code, name, ammount, totalPrice } = item;
+    if (!result[code]) {
+      // Si el código no existe en el objeto result, se crea una nueva entrada con las sumas iniciales
+      result[code] = {
+        name: name,
+        ammount: ammount,
+        billed: totalPrice,
+      };
+    } else {
+      // Si el código ya existe en el objeto result, se actualizan las sumas
+      result[code].ammount += ammount;
+      result[code].billed += totalPrice;
+    }
+  });
+  console.log(result);
+  // console.log("🚀 ~ file: statistics.js:111 ~ dataInfo ~ dataInfo:", dataInfo)
 };
 
 getFeData();
