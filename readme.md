@@ -1,6 +1,6 @@
 # Analizador de XML de Facturas Electrónicas
 
-Este repositorio contiene un script de Node.js para analizar archivos XML y generar estadísticas de facturas electrónicas. Se utilizan las etiquetas estandarizadas por la DIAN (Dirección de Impuestos y Aduanas Nacionales de Colombia), pero es posible que pueda aplicarse a archivos xml generados por entidades de otros países.
+Este repositorio contiene un script de Node.js para analizar archivos XML y generar estadísticas de facturas electrónicas. Se utilizan las [etiquetas estandarizadas por la DIAN](https://www.dian.gov.co/normatividad/Proyectosnormas/Anexo%201%20-%20Proyecto%20Resolución%20000000%20-%2011032019%20-%20Soporte%20Tecnico.pdf) (Dirección de Impuestos y Aduanas Nacionales de Colombia), pero es posible que pueda aplicarse a archivos xml generados por entidades de otros países.
 
 ## Requisitos
 
