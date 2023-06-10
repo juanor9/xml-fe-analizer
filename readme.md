@@ -29,7 +29,7 @@ Este repositorio contiene un script de Node.js para analizar archivos XML y gene
 2. Ejecuta el siguiente comando para iniciar el análisis de los archivos XML:
 
     ```bash
-        npm start
+    npm start
     ```
 3. El script procesará los archivos XML y generará estadísticas basadas en la información de las facturas electrónicas.
 
@@ -38,7 +38,7 @@ Este repositorio contiene un script de Node.js para analizar archivos XML y gene
     {
     'identificador del producto vendido': { 
       name: 'nombre del producto', 
-      ammount: 'cantidades ventidas', 
+      ammount: 'total de unidades vendidas', 
       billed: 'total facturado' }
     }
     ```
